@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400;500;600&display=swap');
+
+/* ========== HERO SECTION ========== */
+.convertt-hero-roi {
+  padding: 160px 0 80px;
+}
+.hero-page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 140px;
+}
+.top-twenty-project {
+  border: 1px solid rgba(222, 216, 211, 1);
+  padding: 5px 12px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  margin: 0 auto;
+}
+.twetnty-heading {
+  background: linear-gradient(90deg, #ff2e2e 0%, #ee7b16 36.28%, #8a43e1 69.75%, #d510fc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+}
+.project-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 1);
+}
+.hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 110%;
+  letter-spacing: -1.5px;
+  text-align: center;
+  color: rgba(30, 30, 30, 1);
+  padding: 32px 0;
+}
+.main-benefits-hero {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+.block-benefits-hero {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.benefits-block-image {
+  width: 20px;
+  height: 20px;
+}
+.benefits-block-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: rgba(76, 76, 76, 1);
+}
+@property --bg-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
+@keyframes spin {
+  to { --bg-angle: 360deg; }
+}
+.main-hero-btn {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  border-radius: 50px;
+  height: 56px;
+  width: fit-content;
+  padding: 0 8px 0 24px;
+  margin: 40px auto 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(250, 250, 250, 1);
+  text-decoration: none;
+  border: 3px solid transparent;
+  animation: spin 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), #000) padding-box,
+    conic-gradient(from var(--bg-angle), #ff2e2e 0%, #ff6b2e 15%, #ee7b16 30%, #c96dd8 60%, #8a43e1 75%, #d510fc 90%, #ff2e2e 100%) border-box;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.main-hero-btn:hover {
+  background: linear-gradient(135deg, #ff5d48 0%, #ff7a5c 50%, #ff9070 100%);
+  border: 0;
+  animation: none;
+  transform: translateY(-2px);
+}
+.hero-btn-svg {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ff2e2e -9.6%, #ee7b16 38.29%, #8a43e1 82.47%, #d510fc 122.4%) border-box;
+  max-width: 40px;
+}
+.main-rating-image-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rating-heading {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #4C4C4C;
+  text-align: center;
+}
+
+/* ========== MARQUEE SECTION ========== */
+.marquee-section {
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 60px;
+}
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-loop 25s linear infinite;
+  will-change: transform;
+}
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-content {
+  display: flex;
+}
+.product-card {
+  flex: 0 0 auto;
+  width: 272px;
+  height: 490px;
+  padding: 10px;
+  margin-right: 12px;
+  border-radius: 20px;
+  background: #fafafa;
+}
+.product-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+@keyframes marquee-loop {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 768px) {
+  .convertt-hero-roi { padding: 84px 0 24px; }
+  .hero-page-width { padding: 0 16px; }
+  .hero-title { font-size: 38px; letter-spacing: -2px; text-align: left; padding: 8px 0 16px; }
+  .main-benefits-hero { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .benefits-block-heading { font-size: 16px; }
+  .main-hero-btn { width: 100%; justify-content: space-between; max-width: 100%; border: 2px solid transparent; }
+  .product-card { width: 200px; height: 352px; }
+  .marquee-track { animation-duration: 20s; }
+}
