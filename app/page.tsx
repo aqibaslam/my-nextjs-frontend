@@ -4,7 +4,7 @@ import MarqueeSection from './components/hero/MarqueeSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate=hero_listing`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[hero_listing]=*&populate[marquee_images]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
@@ -19,12 +19,15 @@ export default async function Home() {
   const page = await getPageData();
 
   return (
-    <div className="main-three-section-bg" style={{
-      backgroundImage: `url(https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp)`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      minHeight: '100vh'
-    }}>
+    <div
+      className="main-three-section-bg"
+      style={{
+        backgroundImage: `url(https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp)`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        minHeight: '100vh'
+      }}
+    >
       <HeroSection
         title={page?.Title || ""}
         twenty_k_heading={page?.twenty_k_heading || "20K+"}
@@ -34,7 +37,7 @@ export default async function Home() {
         hero_rating_heading={page?.hero_rating_heading || ""}
         hero_listing={page?.hero_listing || []}
       />
-      <MarqueeSection />
+      <MarqueeSection marqueeImages={page?.marquee_images || []} />
     </div>
   );
 }
