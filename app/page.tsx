@@ -4,13 +4,14 @@ import MarqueeSection from './components/hero/MarqueeSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[hero_listing]=*&populate[marquee_images]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
     console.log("Data:", JSON.stringify(data.data?.[0]));
     return data.data?.[0] || null;
   } catch (error) {
+    console.error("Fetch error:", error);
     return null;
   }
 }
@@ -35,9 +36,9 @@ export default async function Home() {
         hero_cta={page?.hero_cta || "Get Started Today"}
         hero_cta_url={page?.hero_cta_url || "#"}
         hero_rating_heading={page?.hero_rating_heading || ""}
-        hero_listing={page?.hero_listing || []}
+        hero_listing={page?.HeroListings || []}
       />
-      <MarqueeSection marqueeImages={page?.marquee_images || []} />
+      <MarqueeSection marqueeImages={page?.MarqueeImages || []} />
     </div>
   );
 }

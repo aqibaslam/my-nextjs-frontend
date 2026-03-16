@@ -1,6 +1,7 @@
 import './hero.css';
 
 interface ListItem {
+  id: number;
   list_heading: string;
 }
 
@@ -33,13 +34,13 @@ export default function HeroSection({
           <div className="project-heading">{project_managed_heading}</div>
         </div>
 
-        {/* Title — Strapi se */}
+        {/* Title */}
         <div className="hero-title">{title}</div>
 
-        {/* Benefits — Strapi se */}
+        {/* Benefits */}
         <div className="main-benefits-hero">
           {hero_listing?.map((item, i) => (
-            <div className="block-benefits-hero" key={i}>
+            <div className="block-benefits-hero" key={item.id || i}>
               <img
                 className="benefits-block-image"
                 src="https://convertt.co/wp-content/uploads/2026/02/teenyicons_tick-circle-outline.svg"
@@ -50,7 +51,7 @@ export default function HeroSection({
           ))}
         </div>
 
-        {/* CTA Button — Strapi se */}
+        {/* CTA Button */}
         <a className="main-hero-btn" href={hero_cta_url}>
           {hero_cta}
           <img
@@ -60,7 +61,7 @@ export default function HeroSection({
           />
         </a>
 
-        {/* Rating — Strapi se */}
+        {/* Rating */}
         <div className="main-rating-image-info">
           <div className="rating-heading">{hero_rating_heading}</div>
         </div>
