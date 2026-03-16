@@ -8,7 +8,6 @@ async function getPageData() {
       { cache: 'no-store' }
     );
     const data = await res.json();
-    console.log("Data:", JSON.stringify(data.data?.[0]));
     return data.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
