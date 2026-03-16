@@ -126,22 +126,23 @@
   overflow: hidden;
   padding-bottom: 60px;
 }
+
 .marquee-container {
   width: 100%;
   overflow: hidden;
 }
+
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-loop 25s linear infinite;
+  animation: marquee-loop 30s linear infinite;
   will-change: transform;
 }
+
 .marquee-container:hover .marquee-track {
   animation-play-state: paused;
 }
-.marquee-content {
-  display: flex;
-}
+
 .product-card {
   flex: 0 0 auto;
   width: 272px;
@@ -151,6 +152,7 @@
   border-radius: 20px;
   background: #fafafa;
 }
+
 .product-card img {
   width: 100%;
   height: 100%;
@@ -158,19 +160,13 @@
   border-radius: 8px;
   display: block;
 }
+
 @keyframes marquee-loop {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
 }
 
-/* ========== MOBILE ========== */
 @media (max-width: 768px) {
-  .convertt-hero-roi { padding: 84px 0 24px; }
-  .hero-page-width { padding: 0 16px; }
-  .hero-title { font-size: 38px; letter-spacing: -2px; text-align: left; padding: 8px 0 16px; }
-  .main-benefits-hero { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .benefits-block-heading { font-size: 16px; }
-  .main-hero-btn { width: 100%; justify-content: space-between; max-width: 100%; border: 2px solid transparent; }
-  .product-card { width: 200px; height: 352px; }
   .marquee-track { animation-duration: 20s; }
+  .product-card { width: 200px; height: 352px; }
 }

@@ -19,31 +19,25 @@ const fallbackImages = [
 
 export default function MarqueeSection({ marqueeImages }: MarqueeSectionProps) {
 
-  const images = marqueeImages?.length > 0
+  const baseImages = marqueeImages?.length > 0
     ? marqueeImages.map((img) => ({
         url: img.url.startsWith('http') ? img.url : `${STRAPI_URL}${img.url}`,
         alt: img.alternativeText || '',
       }))
     : fallbackImages;
 
+  // 3 baar repeat karo seamless infinite loop ke liye
+  const images = [...baseImages, ...baseImages, ...baseImages];
+
   return (
     <section className="marquee-section">
       <div className="marquee-container">
         <div className="marquee-track">
-          <div className="marquee-content">
-            {images.map((img, i) => (
-              <div className="product-card" key={i}>
-                <img src={img.url} alt={img.alt} />
-              </div>
-            ))}
-          </div>
-          <div className="marquee-content" aria-hidden="true">
-            {images.map((img, i) => (
-              <div className="product-card" key={i}>
-                <img src={img.url} alt={img.alt} />
-              </div>
-            ))}
-          </div>
+          {images.map((img, i) => (
+            <div className="product-card" key={i}>
+              <img src={img.url} alt={img.alt} />
+            </div>
+          ))}
         </div>
       </div>
     </section>
