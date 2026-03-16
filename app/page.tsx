@@ -4,7 +4,7 @@ import MarqueeSection from './components/hero/MarqueeSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
@@ -17,6 +17,14 @@ async function getPageData() {
 
 export default async function Home() {
   const page = await getPageData();
+
+  // MarqueeImages se URLs nikaalo
+  const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
+    item.MarqueeImage?.map((img: any) => ({
+      url: img.url,
+      alternativeText: img.alternativeText || '',
+    })) || []
+  ) || [];
 
   return (
     <div
@@ -37,7 +45,7 @@ export default async function Home() {
         hero_rating_heading={page?.hero_rating_heading || ""}
         hero_listing={page?.HeroListings || []}
       />
-      <MarqueeSection marqueeImages={page?.MarqueeImages || []} />
+      <MarqueeSection marqueeImages={marqueeImages} />
     </div>
   );
 }

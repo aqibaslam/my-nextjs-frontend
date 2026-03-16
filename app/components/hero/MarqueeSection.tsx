@@ -1,6 +1,5 @@
 interface MarqueeImage {
-  id: number;
-  url?: string;
+  url: string;
   alternativeText?: string;
 }
 
@@ -11,23 +10,21 @@ interface MarqueeSectionProps {
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || '';
 
 const fallbackImages = [
-  'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp',
-  'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp',
-  'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp',
-  'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp',
-  'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp',
+  { url: 'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp', alt: '' },
+  { url: 'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp', alt: '' },
+  { url: 'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp', alt: '' },
+  { url: 'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp', alt: '' },
+  { url: 'https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp', alt: '' },
 ];
 
 export default function MarqueeSection({ marqueeImages }: MarqueeSectionProps) {
 
-  const hasImages = marqueeImages?.length > 0 && marqueeImages[0]?.url;
-
-  const images = hasImages
+  const images = marqueeImages?.length > 0
     ? marqueeImages.map((img) => ({
-        url: img.url!.startsWith('http') ? img.url! : `${STRAPI_URL}${img.url}`,
+        url: img.url.startsWith('http') ? img.url : `${STRAPI_URL}${img.url}`,
         alt: img.alternativeText || '',
       }))
-    : fallbackImages.map((url) => ({ url, alt: '' }));
+    : fallbackImages;
 
   return (
     <section className="marquee-section">
