@@ -2,7 +2,7 @@ import './hero.css';
 
 interface ListItem {
   id: number;
-  list_heading: string;
+  list_title: string;
 }
 
 interface HeroProps {
@@ -46,7 +46,7 @@ export default function HeroSection({
                 src="https://convertt.co/wp-content/uploads/2026/02/teenyicons_tick-circle-outline.svg"
                 alt=""
               />
-              <div className="benefits-block-heading">{item.list_heading}</div>
+              <div className="benefits-block-heading">{item.list_title}</div>
             </div>
           ))}
         </div>
