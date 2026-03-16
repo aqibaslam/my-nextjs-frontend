@@ -4,7 +4,7 @@ import MarqueeSection from './components/hero/MarqueeSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
