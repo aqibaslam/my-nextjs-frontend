@@ -6,37 +6,25 @@ import StoriesSection from './components/stories/StoriesSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][populate]=*`,
       { cache: 'no-store' }
     );
-    const data = await res.json();
-    return data.data?.[0] || null;
+    const json = await res.json();
+    
+    // Returns the first object in the data array (Strapi 5 structure)
+    return json.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
     return null;
   }
 }
 
-async function getReviews() {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/reviews?populate=*&pagination[pageSize]=50`,
-      { cache: 'no-store' }
-    );
-    const data = await res.json();
-    return data.data || [];
-  } catch (error) {
-    console.error("Reviews fetch error:", error);
-    return [];
-  }
-}
-
 export default async function Home() {
-  const [page, reviews] = await Promise.all([
-    getPageData(),
-    getReviews(),
-  ]);
+  const page = await getPageData();
 
+  if (!page) return <div>Loading...</div>;
+
+  // Correctly extract Marquee images from the nested Strapi 5 structure
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
       url: img.url,
@@ -53,6 +41,7 @@ export default async function Home() {
         backgroundSize: 'cover',
       }}
     >
+      {/* 1. Hero Section */}
       <HeroSection
         title={page?.Title || ""}
         twenty_k_heading={page?.twenty_k_heading || "20K+"}
@@ -62,7 +51,11 @@ export default async function Home() {
         hero_rating_heading={page?.hero_rating_heading || ""}
         hero_listing={page?.HeroListings || []}
       />
+
+      {/* 2. Marquee Section */}
       <MarqueeSection marqueeImages={marqueeImages} />
+
+      {/* 3. Who We Are Section */}
       <WhoWeAre
         who_subtitle={page?.who_subtitle || ""}
         who_title={page?.who_title || ""}
@@ -70,12 +63,15 @@ export default async function Home() {
         brandslogo={page?.brandslogo || []}
         strapiUrl={process.env.NEXT_PUBLIC_STRAPI_URL || ''}
       />
+
+      {/* 4. Stories/Reviews Section */}
       <StoriesSection
-        stories_subtitle={page?.stories_subtitle || "CLIENT STORIES"}
-        stories_title={page?.stories_title || "Real Brands. Real Results."}
-        stories_cta={page?.stories_cta || "See All Stories"}
+        stories_subtitle={page?.stories_subtitle || "REAL STORIES"}
+        stories_title={page?.stories_title || "Don't take our word for it."}
+        stories_cta={page?.stories_cta || "Get Your FREE Audit Now!"}
         stories_cta_url={page?.stories_cta_url || "#"}
-        reviews={page?.reviews || []}
+        // Uses 'Review' with a capital R to match your API JSON
+        reviews={page?.Review || []} 
       />
     </div>
   );
