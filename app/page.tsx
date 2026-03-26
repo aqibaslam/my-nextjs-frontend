@@ -6,7 +6,8 @@ import StoriesSection from './components/stories/StoriesSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*`,
+      // 1. Added &populate[Review]=* to the URL to fetch the video component data
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
@@ -17,25 +18,9 @@ async function getPageData() {
   }
 }
 
-async function getReviews() {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/reviews?populate=*&pagination[pageSize]=50`,
-      { cache: 'no-store' }
-    );
-    const data = await res.json();
-    return data.data || [];
-  } catch (error) {
-    console.error("Reviews fetch error:", error);
-    return [];
-  }
-}
-
 export default async function Home() {
-  const [page, reviews] = await Promise.all([
-    getPageData(),
-    getReviews(),
-  ]);
+  // 2. You only need to fetch the page data now
+  const page = await getPageData();
 
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
@@ -75,7 +60,8 @@ export default async function Home() {
         stories_title={page?.stories_title || "Real Brands. Real Results."}
         stories_cta={page?.stories_cta || "See All Stories"}
         stories_cta_url={page?.stories_cta_url || "#"}
-        reviews={reviews}
+        // 3. This matches the capital 'R' in your Strapi screenshot component
+        reviews={page?.Review || []} 
       />
     </div>
   );
