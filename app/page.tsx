@@ -52,6 +52,7 @@ export default async function Home() {
         who_title={page?.who_title || ""}
         slides={page?.slides || []}
         brandslogo={page?.brandslogo || []}
+        strapiUrl={process.env.NEXT_PUBLIC_STRAPI_URL || ''}
       />
     </div>
   );

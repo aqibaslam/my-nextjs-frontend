@@ -21,13 +21,12 @@ interface WhoWeAreProps {
   who_title: string;
   slides: Slide[];
   brandslogo: BrandLogo[];
+  strapiUrl: string;
 }
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || '';
-
-function getUrl(url: string) {
+function getUrl(url: string, strapiUrl: string) {
   if (!url) return '';
-  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
+  return url.startsWith('http') ? url : `${strapiUrl}${url}`;
 }
 
 export default function WhoWeAre({
@@ -35,6 +34,7 @@ export default function WhoWeAre({
   who_title,
   slides,
   brandslogo,
+  strapiUrl,
 }: WhoWeAreProps) {
   return (
     <section className="who-we-are-roi">
@@ -51,7 +51,7 @@ export default function WhoWeAre({
                   {slide.images?.url && (
                     <img
                       className="project-img"
-                      src={getUrl(slide.images.url)}
+                      src={getUrl(slide.images.url, strapiUrl)}
                       alt={slide.images.alternativeText || ''}
                     />
                   )}
@@ -70,7 +70,7 @@ export default function WhoWeAre({
                   <img
                     key={brand.id}
                     className="agencies-images"
-                    src={getUrl(brand.brand_image.url)}
+                    src={getUrl(brand.brand_image.url, strapiUrl)}
                     alt={brand.brand_image.alternativeText || ''}
                   />
                 )
