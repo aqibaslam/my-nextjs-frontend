@@ -61,7 +61,7 @@ export default async function Home() {
         stories_cta={page?.stories_cta || "See All Stories"}
         stories_cta_url={page?.stories_cta_url || "#"}
         // 3. This matches the capital 'R' in your Strapi screenshot component
-        reviews={page?.Review || []} 
+        reviews={page?.Review || page?.attributes?.Review || page?.reviews || []} 
       />
     </div>
   );
