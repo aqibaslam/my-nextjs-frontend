@@ -5,10 +5,12 @@ import WhoWeAre from './components/whoweare/WhoWeAre';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
+    console.log("brandslogo:", JSON.stringify(data.data?.[0]?.brandslogo));
+    console.log("slides:", JSON.stringify(data.data?.[0]?.slides));
     return data.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -19,7 +21,6 @@ async function getPageData() {
 export default async function Home() {
   const page = await getPageData();
 
-  // MarqueeImages se URLs nikaalo
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
       url: img.url,
