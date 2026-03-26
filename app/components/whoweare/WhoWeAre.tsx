@@ -41,13 +41,9 @@ export default function WhoWeAre({
       <div className="page-width">
         <div className="main-wrapper-who-are-we">
 
-          {/* Subtitle */}
           <div className="subtitle-who">{who_subtitle}</div>
-
-          {/* Title */}
           <div className="desc-who">{who_title}</div>
 
-          {/* Slides Grid */}
           {slides?.length > 0 && (
             <div className="main-block-projects-images">
               {slides.map((slide) => (
@@ -67,16 +63,17 @@ export default function WhoWeAre({
             </div>
           )}
 
-          {/* Brand Logos */}
           {brandslogo?.length > 0 && (
             <div className="main-bottom-agencies-images">
               {brandslogo.map((brand) => (
-                <img
-                  key={brand.id}
-                  className="agencies-images"
-                  src={getUrl(brand.brand_image?.url)}
-                  alt={brand.brand_image?.alternativeText || ''}
-                />
+                brand.brand_image?.url && (
+                  <img
+                    key={brand.id}
+                    className="agencies-images"
+                    src={getUrl(brand.brand_image.url)}
+                    alt={brand.brand_image.alternativeText || ''}
+                  />
+                )
               ))}
             </div>
           )}
