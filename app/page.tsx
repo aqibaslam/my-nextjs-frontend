@@ -1,3 +1,4 @@
+// page.tsx
 import HeroSection from './components/hero/HeroSection';
 import MarqueeSection from './components/hero/MarqueeSection';
 import WhoWeAre from './components/whoweare/WhoWeAre';
@@ -6,11 +7,11 @@ import StoriesSection from './components/stories/StoriesSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      // 1. Added &populate[Review]=* to the URL to fetch the video component data
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
+    // Strapi returns an array in data.data. We take the first item.
     return data.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -19,8 +20,11 @@ async function getPageData() {
 }
 
 export default async function Home() {
-  // 2. You only need to fetch the page data now
-  const page = await getPageData();
+  const rawData = await getPageData();
+  
+  // FIX: Strapi v4 nests fields inside 'attributes'. 
+  // We check both for compatibility.
+  const page = rawData?.attributes || rawData;
 
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
@@ -56,12 +60,13 @@ export default async function Home() {
         strapiUrl={process.env.NEXT_PUBLIC_STRAPI_URL || ''}
       />
       <StoriesSection
-        stories_subtitle={page?.stories_subtitle || "CLIENT STORIES"}
-        stories_title={page?.stories_title || "Real Brands. Real Results."}
-        stories_cta={page?.stories_cta || "See All Stories"}
+        // Use the exact field names from your Strapi screenshot
+        stories_subtitle={page?.stories_subtitle || "REAL STORIES"} 
+        stories_title={page?.stories_title || "Don't take our word for it. Take theirs."}
+        stories_cta={page?.stories_cta || "Get Your FREE Audit Now!"}
         stories_cta_url={page?.stories_cta_url || "#"}
-        // 3. This matches the capital 'R' in your Strapi screenshot component
-        reviews={page?.Review || page?.attributes?.Review || page?.reviews || []} 
+        // Pass the Review component array directly
+        reviews={page?.Review || []} 
       />
     </div>
   );
