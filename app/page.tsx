@@ -47,6 +47,12 @@ export default async function Home() {
         hero_listing={page?.HeroListings || []}
       />
       <MarqueeSection marqueeImages={marqueeImages} />
+      <WhoWeAre
+        who_subtitle={page?.who_subtitle || ""}
+        who_title={page?.who_title || ""}
+        slides={page?.slides || []}
+        brandslogo={page?.brandslogo || []}
+      />
     </div>
   );
 }
