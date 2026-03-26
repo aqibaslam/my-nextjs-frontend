@@ -1,6 +1,7 @@
 import HeroSection from './components/hero/HeroSection';
 import MarqueeSection from './components/hero/MarqueeSection';
 import WhoWeAre from './components/whoweare/WhoWeAre';
+import StoriesSection from './components/stories/StoriesSection';
 
 async function getPageData() {
   try {
@@ -9,8 +10,6 @@ async function getPageData() {
       { cache: 'no-store' }
     );
     const data = await res.json();
-    console.log("brandslogo:", JSON.stringify(data.data?.[0]?.brandslogo));
-    console.log("slides:", JSON.stringify(data.data?.[0]?.slides));
     return data.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -18,8 +17,25 @@ async function getPageData() {
   }
 }
 
+async function getReviews() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/reviews?populate=*&pagination[pageSize]=50`,
+      { cache: 'no-store' }
+    );
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Reviews fetch error:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
-  const page = await getPageData();
+  const [page, reviews] = await Promise.all([
+    getPageData(),
+    getReviews(),
+  ]);
 
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
@@ -35,7 +51,6 @@ export default async function Home() {
         backgroundImage: `url(https://convertt.co/wp-content/uploads/2026/02/Background_mask-group-scaled.webp)`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        minHeight: '100vh'
       }}
     >
       <HeroSection
@@ -54,6 +69,13 @@ export default async function Home() {
         slides={page?.slides || []}
         brandslogo={page?.brandslogo || []}
         strapiUrl={process.env.NEXT_PUBLIC_STRAPI_URL || ''}
+      />
+      <StoriesSection
+        stories_subtitle={page?.stories_subtitle || "CLIENT STORIES"}
+        stories_title={page?.stories_title || "Real Brands. Real Results."}
+        stories_cta={page?.stories_cta || "See All Stories"}
+        stories_cta_url={page?.stories_cta_url || "#"}
+        reviews={reviews}
       />
     </div>
   );

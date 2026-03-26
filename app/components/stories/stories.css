@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* ========== STORIES SECTION ========== */
+.stories-co-roi .page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px;
+}
+.stories-co-roi .subtitle {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 70, 46, 1);
+  padding-bottom: 20px;
+}
+.stories-co-roi .title-with-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+.stories-co-roi .title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 65px;
+  letter-spacing: -1.5px;
+  text-align: left;
+  color: rgba(49, 39, 48, 1);
+}
+.stories-co-roi .column {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.stories-co-roi .review {
+  aspect-ratio: 0.5625;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+.stories-co-roi .stories-video {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  border: none;
+}
+.stories-co-roi .main-content-on-video {
+  position: absolute;
+  bottom: 60px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  pointer-events: none;
+}
+.stories-co-roi .content-desc {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 100%;
+  letter-spacing: -0.1px;
+  color: rgba(255, 255, 255, 1);
+}
+.stories-co-roi .content-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.70);
+}
+.main-name-prof-svg {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 0 12px;
+}
+.stories-co-roi .btn-stories {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 50px;
+  height: 56px;
+  gap: 16px;
+  width: 364px;
+  padding: 0 8px 0 24px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(250, 250, 250, 1);
+  text-decoration: none;
+  border: 3px solid transparent;
+  animation: spin 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), #000) padding-box,
+    conic-gradient(from var(--bg-angle), #ff2e2e 0%, #ff6b2e 15%, #ee7b16 30%, #c96dd8 60%, #8a43e1 75%, #d510fc 90%, #ff2e2e 100%) border-box;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stories-co-roi .btn-stories:hover {
+  background: linear-gradient(135deg, #ff5d48 0%, #ff7a5c 50%, #ff9070 100%);
+  border: 0;
+  animation: none;
+  transform: translateY(-2px);
+}
+.stories-co-roi .arrow-btn-vid {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ff2e2e -9.6%, #ee7b16 38.29%, #8a43e1 82.47%, #d510fc 122.4%) border-box;
+  max-width: 40px;
+}
+.stories-co-roi .load-more-wrapper {
+  display: flex;
+  margin-top: 32px;
+  justify-content: center;
+}
+.stories-co-roi .load-more-btn {
+  background: rgba(250, 250, 250, 1);
+  border: 1px solid rgba(0, 0, 0, 1);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(30, 30, 30, 1);
+  height: 52px;
+  padding: 0 6px 0 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+}
+
+/* Desktop show, Mobile hide */
+.desktop-stories { display: block; }
+.mobile-stories { display: none; }
+
+@media (max-width: 768px) {
+  .desktop-stories { display: none; }
+  .mobile-stories { display: block; }
+  .stories-co-roi .page-width {
+    padding: 24px 16px;
+  }
+  .stories-co-roi .subtitle {
+    padding-bottom: 12px;
+    text-align: center;
+  }
+  .stories-co-roi .title-with-btn {
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 24px;
+  }
+  .stories-co-roi .title {
+    font-size: 28px;
+    line-height: 33.6px;
+    letter-spacing: -1px;
+    text-align: center;
+    max-width: 321px;
+  }
+  .stories-co-roi .btn-stories {
+    display: none;
+  }
+  .stories-co-roi .mobile-column {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .stories-co-roi .main-content-on-video {
+    bottom: 50px;
+    left: 10px;
+    right: 10px;
+  }
+  .stories-co-roi .content-desc {
+    font-size: 16px;
+    line-height: 16.8px;
+  }
+  .stories-co-roi .content-name {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+  .stories-co-roi .load-more-wrapper {
+    margin-top: 24px;
+  }
+}
