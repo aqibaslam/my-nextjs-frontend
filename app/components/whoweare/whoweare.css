@@ -1,0 +1,83 @@
+/* who-we-are-roi */
+.who-we-are-roi {
+  padding: 70px 0;
+}
+.who-we-are-roi .page-width {
+  padding: 0 80px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.who-we-are-roi .main-block-projects-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+.who-we-are-roi .block-project-images {
+  border: 1px solid rgba(233, 233, 233, 1);
+  background: rgba(244, 231, 253, 1);
+  height: 70px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.who-we-are-roi .subtitle-who {
+  font-family: "Inter Display", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 120%;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(255, 70, 46, 1);
+}
+.who-we-are-roi .desc-who {
+  font-family: "Inter Display", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 27px;
+  text-align: center;
+  color: rgba(30, 30, 30, 1);
+  max-width: 1022px;
+  margin: 0 auto;
+  padding: 12px 0 32px;
+}
+.who-we-are-roi .project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.who-we-are-roi .project-image-see-more {
+  font-family: "Inter Display", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  background: rgba(213, 16, 252, 1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.who-we-are-roi .main-bottom-agencies-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 72px;
+  padding-top: 58px;
+  flex-wrap: wrap;
+}
+.who-we-are-roi .agencies-images {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .who-we-are-roi { padding: 20px 0; }
+  .who-we-are-roi .page-width { padding: 0 16px; }
+  .who-we-are-roi .main-block-projects-images { grid-template-columns: 1fr 1fr; }
+  .who-we-are-roi .main-bottom-agencies-images { gap: 40px; padding-top: 40px; }
+  .who-we-are-roi .desc-who { font-size: 14px; line-height: 22px; padding: 12px 0 24px; }
+}

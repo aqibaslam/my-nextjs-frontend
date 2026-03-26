@@ -1,5 +1,6 @@
 import HeroSection from './components/hero/HeroSection';
 import MarqueeSection from './components/hero/MarqueeSection';
+import WhoWeAre from './components/whoweare/WhoWeAre';
 
 async function getPageData() {
   try {
