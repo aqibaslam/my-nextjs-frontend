@@ -1,4 +1,3 @@
-// page.tsx
 import HeroSection from './components/hero/HeroSection';
 import MarqueeSection from './components/hero/MarqueeSection';
 import WhoWeAre from './components/whoweare/WhoWeAre';
@@ -7,11 +6,10 @@ import StoriesSection from './components/stories/StoriesSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*`,
       { cache: 'no-store' }
     );
     const data = await res.json();
-    // Strapi returns an array in data.data. We take the first item.
     return data.data?.[0] || null;
   } catch (error) {
     console.error("Fetch error:", error);
@@ -19,12 +17,25 @@ async function getPageData() {
   }
 }
 
+async function getReviews() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/reviews?populate=*&pagination[pageSize]=50`,
+      { cache: 'no-store' }
+    );
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Reviews fetch error:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
-  const rawData = await getPageData();
-  
-  // FIX: Strapi v4 nests fields inside 'attributes'. 
-  // We check both for compatibility.
-  const page = rawData?.attributes || rawData;
+  const [page, reviews] = await Promise.all([
+    getPageData(),
+    getReviews(),
+  ]);
 
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
@@ -60,13 +71,11 @@ export default async function Home() {
         strapiUrl={process.env.NEXT_PUBLIC_STRAPI_URL || ''}
       />
       <StoriesSection
-        // Use the exact field names from your Strapi screenshot
-        stories_subtitle={page?.stories_subtitle || "REAL STORIES"} 
-        stories_title={page?.stories_title || "Don't take our word for it. Take theirs."}
-        stories_cta={page?.stories_cta || "Get Your FREE Audit Now!"}
+        stories_subtitle={page?.stories_subtitle || "CLIENT STORIES"}
+        stories_title={page?.stories_title || "Real Brands. Real Results."}
+        stories_cta={page?.stories_cta || "See All Stories"}
         stories_cta_url={page?.stories_cta_url || "#"}
-        // Pass the Review component array directly
-        reviews={page?.Review || []} 
+        reviews={page?.reviews || []}
       />
     </div>
   );
