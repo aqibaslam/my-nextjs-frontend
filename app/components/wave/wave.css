@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&family=Inter:wght@600&display=swap');
+
+.wave-goodby .page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+.wave-goodby .card {
+  background: rgba(30, 30, 30, 1);
+  border: 1px solid rgba(76, 76, 76, 1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 40px;
+}
+.wave-goodby .left {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+}
+.wave-goodby .title-svg-wave {
+  position: absolute;
+  right: 28px;
+  top: -26px;
+}
+.wave-goodby .left h2 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 65px;
+  letter-spacing: -1.5px;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+}
+.wave-goodby .list-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 20px 0;
+}
+.wave-goodby .list-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, #1e1e1e, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+.wave-goodby .list-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to top, #1e1e1e, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+.wave-goodby .item {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 120%;
+  letter-spacing: 0;
+  color: #3b3b3b;
+  white-space: nowrap;
+  will-change: transform;
+}
+.wave-goodby .item.active {
+  background: linear-gradient(90deg, #ff2e2e 0%, #ee7b16 36.28%, #8a43e1 69.75%, #d510fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .wave-goodby .page-width {
+    padding: 20px 16px;
+  }
+  .wave-goodby .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 16px;
+  }
+  .wave-goodby .title-svg-wave {
+    max-width: 65px;
+    right: -62px;
+    top: 11px;
+    transform: rotate(30deg);
+    z-index: 3;
+  }
+  .wave-goodby .left h2 {
+    font-size: 26px;
+    line-height: 36px;
+    letter-spacing: 0;
+  }
+  .wave-goodby .item {
+    font-size: 23px;
+    line-height: 120%;
+    top: 10px;
+  }
+  .wave-goodby .list-wrap {
+    padding: 16px 0;
+  }
+  .wave-goodby .list-wrap::before,
+  .wave-goodby .list-wrap::after {
+    height: 32px;
+  }
+}
