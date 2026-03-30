@@ -7,7 +7,7 @@ import WaveSection from './components/wave/WaveSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][populate]=*&populate[wave_listing_block]=*&populate[wave_title_image]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate=*`,
       { cache: 'no-store' }
     );
     const json = await res.json();
@@ -20,8 +20,6 @@ async function getPageData() {
 
 export default async function Home() {
   const page = await getPageData();
-
-  if (!page) return <div>Loading...</div>;
 
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
 
@@ -41,7 +39,6 @@ export default async function Home() {
         backgroundSize: 'cover',
       }}
     >
-      {/* 1. Hero Section */}
       <HeroSection
         title={page?.Title || ""}
         twenty_k_heading={page?.twenty_k_heading || "20K+"}
@@ -51,11 +48,7 @@ export default async function Home() {
         hero_rating_heading={page?.hero_rating_heading || ""}
         hero_listing={page?.HeroListings || []}
       />
-
-      {/* 2. Marquee Section */}
       <MarqueeSection marqueeImages={marqueeImages} />
-
-      {/* 3. Who We Are Section */}
       <WhoWeAre
         who_subtitle={page?.who_subtitle || ""}
         who_title={page?.who_title || ""}
@@ -63,8 +56,6 @@ export default async function Home() {
         brandslogo={page?.brandslogo || []}
         strapiUrl={strapiUrl}
       />
-
-      {/* 4. Stories Section */}
       <StoriesSection
         stories_subtitle={page?.stories_subtitle || "REAL STORIES"}
         stories_title={page?.stories_title || "Don't take our word for it."}
@@ -72,8 +63,6 @@ export default async function Home() {
         stories_cta_url={page?.stories_cta_url || "#"}
         reviews={page?.Review || []}
       />
-
-      {/* 5. Wave Goodbye Section */}
       <WaveSection
         wave_title={page?.wave_title || "Wave goodbye to..."}
         wave_title_image={page?.wave_title_image?.url || ""}
