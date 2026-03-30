@@ -7,7 +7,7 @@ import WaveSection from './components/wave/WaveSection';
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_title_image]=*&populate[wave_listing]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*`,
       { cache: 'no-store' }
     );
     const json = await res.json();
@@ -23,17 +23,15 @@ export default async function Home() {
 
   const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
 
-  // MarqueeImages URLs
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
-      url: img.url,
+      url: img.url.startsWith('http') ? img.url : `${strapiUrl}${img.url}`,
       alternativeText: img.alternativeText || '',
     })) || []
   ) || [];
 
-  // Wave listing — single object ko array mein convert karo
   const waveListing = page?.wave_listing
-    ? [page.wave_listing]
+    ? [{ id: page.wave_listing.id, list_heading: page.wave_listing.list_heading }]
     : [];
 
   return (
@@ -71,7 +69,11 @@ export default async function Home() {
       />
       <WaveSection
         wave_title={page?.wave_title || "Wave goodbye to..."}
-        wave_title_image={page?.wave_title_image?.url || ""}
+        wave_title_image={page?.wave_title_image?.url
+          ? page.wave_title_image.url.startsWith('http')
+            ? page.wave_title_image.url
+            : `${strapiUrl}${page.wave_title_image.url}`
+          : ""}
         wave_listing_block={waveListing}
         strapiUrl={strapiUrl}
       />
