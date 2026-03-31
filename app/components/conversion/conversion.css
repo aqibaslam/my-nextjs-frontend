@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700&family=Inter:wght@400;500;600&display=swap');
+
+.conversion-sec-roi .container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 70px 80px;
+}
+.conversion-sec-roi .header-section {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.conversion-sec-roi .main-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 65px;
+  letter-spacing: -1.5px;
+  color: rgba(49, 39, 48, 1);
+  max-width: 660px;
+}
+.conversion-sec-roi .result-box {
+  background: rgba(248, 249, 250, 1);
+  padding: 24.5px;
+  border-radius: 1rem;
+  max-width: fit-content;
+}
+.conversion-sec-roi .result-box .cont {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 120%;
+  max-width: 403px;
+  color: rgba(76, 76, 76, 1);
+}
+.cont-color {
+  background: linear-gradient(90deg, #ff2e2e 0%, #ee7b16 36.28%, #8a43e1 69.75%, #d510fc 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+.conversion-sec-roi .comparison-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.conversion-sec-roi .card {
+  padding: 32px;
+  border-radius: 16px;
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+.conversion-sec-roi .light-card { background: rgba(253, 231, 231, 1); }
+.conversion-sec-roi .dark-card { background: rgba(241, 253, 231, 1); }
+.conversion-sec-roi .card .head {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  color: rgba(30, 30, 30, 1);
+}
+.conversion-sec-roi .feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.conversion-sec-roi .feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.conversion-sec-roi .feature-list li img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.conversion-sec-roi .light-card .feature-list .desc,
+.conversion-sec-roi .dark-card .feature-list .desc {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(76, 76, 76, 1);
+}
+.conversion-sec-roi .conversion-table {
+  background: #fff;
+  border-radius: 0.8rem;
+}
+.conversion-sec-roi .light-conversion-image,
+.conversion-sec-roi .dark-conversion-image {
+  border-radius: 0.8rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .conversion-sec-roi .container { padding: 40px 16px; }
+  .conversion-sec-roi .header-section { flex-direction: column; align-items: center; margin-bottom: 24px; gap: 12px; }
+  .conversion-sec-roi .main-title { font-size: 32px; line-height: 130%; }
+  .conversion-sec-roi .comparison-cards { flex-direction: column; gap: 16px; }
+  .conversion-sec-roi .card { padding: 16px; border-radius: 12px; }
+  .conversion-sec-roi .result-box { padding: 0; background: none; }
+  .conversion-sec-roi .result-box .cont { font-size: 14px; }
+}

@@ -1,0 +1,155 @@
+.pricing-roi {
+  padding: 30px 0;
+}
+.pricing-roi .page-width {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+.pricing-roi .title-pricing-roi {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 65px;
+  letter-spacing: -1.5px;
+  text-align: center;
+  color: rgba(49, 39, 48, 1);
+  max-width: 620px;
+  margin: 0 auto 32px;
+}
+.pricing-roi .main-wrapper-pricing-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 25px;
+}
+.pricing-roi .pricing-card {
+  border-radius: 20px;
+  overflow: hidden;
+}
+.pricing-roi .pricing-card:nth-child(1) { background: rgba(244, 231, 253, 1); }
+.pricing-roi .pricing-card:nth-child(2) { background: rgba(229, 242, 255, 1); }
+.pricing-roi .pricing-card:nth-child(3) { background: rgba(241, 253, 231, 1); }
+.pricing-roi .card-top {
+  padding: 28px;
+  border-radius: 16px;
+}
+.pricing-roi .pricing-card:nth-child(1) .card-top { background: rgba(242, 183, 254, 1); }
+.pricing-roi .pricing-card:nth-child(2) .card-top { background: rgba(153, 202, 255, 1); }
+.pricing-roi .pricing-card:nth-child(3) .card-top { background: rgba(211, 228, 196, 1); }
+.pricing-roi .card-bottom {
+  padding: 40px 28px;
+}
+.pricing-roi .title-block {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  color: rgba(12, 21, 9, 1);
+}
+.pricing-roi .title-desc {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(76, 76, 76, 1);
+  padding: 10px 0 20px;
+}
+.pricing-roi .main-price-one-time {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  min-height: 36px;
+}
+.pricing-roi .price-heading {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 100%;
+  color: rgba(30, 30, 30, 1);
+}
+.pricing-roi .one-heading {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: rgba(76, 76, 76, 1);
+}
+@property --bg-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
+}
+@keyframes spin { to { --bg-angle: 360deg; } }
+.pricing-roi .price-block-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 50px;
+  height: 56px;
+  width: 100%;
+  padding: 0 8px 0 24px;
+  margin: 24px 0 0;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(250, 250, 250, 1);
+  text-decoration: none;
+  border: 3px solid transparent;
+  animation: spin 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.95), #000) padding-box,
+    conic-gradient(from var(--bg-angle), #ff2e2e 0%, #ff6b2e 15%, #ee7b16 30%, #c96dd8 60%, #8a43e1 75%, #d510fc 90%, #ff2e2e 100%) border-box;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pricing-roi .price-block-btn:hover {
+  background: linear-gradient(135deg, #ff5d48 0%, #ff7a5c 50%, #ff9070 100%);
+  border: 0;
+  animation: none;
+  transform: translateY(-2px);
+}
+.pricing-roi .price-btn-image {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, #ff2e2e -9.6%, #ee7b16 38.29%, #8a43e1 82.47%, #d510fc 122.4%) border-box;
+  max-width: 40px;
+}
+.pricing-roi .price-block-btn:hover .price-btn-image { border: none; background: #fff; }
+.pricing-roi .main-listing-price {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+.pricing-roi .listing-price {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: rgba(76, 76, 76, 1);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pricing-roi .listing-price::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-image: url(https://convertt.co/wp-content/uploads/2026/02/Vector-aa.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .pricing-roi { padding: 20px 0; }
+  .pricing-roi .page-width { padding: 0 16px; }
+  .pricing-roi .main-wrapper-pricing-block { grid-template-columns: 1fr; gap: 12px; }
+  .pricing-roi .title-pricing-roi { font-size: 32px; line-height: 130%; margin: 0 auto 24px; max-width: 100%; }
+  .pricing-roi .card-top { padding: 20px; }
+  .pricing-roi .card-bottom { padding: 28px 24px; }
+  .pricing-roi .listing-price { font-size: 16px; }
+  .pricing-roi .main-listing-price { gap: 12px; }
+}

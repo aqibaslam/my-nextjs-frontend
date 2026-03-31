@@ -3,11 +3,17 @@ import MarqueeSection from './components/hero/MarqueeSection';
 import WhoWeAre from './components/whoweare/WhoWeAre';
 import StoriesSection from './components/stories/StoriesSection';
 import WaveSection from './components/wave/WaveSection';
+import ConversionSection from './components/conversion/ConversionSection';
+import PricingSection from './components/pricing/PricingSection';
+import CalculatorSection from './components/calculator/CalculatorSection';
+import ReadySection from './components/ready/ReadySection';
+import ClutchSection from './components/clutch/ClutchSection';
+import FaqSection from './components/faq/FaqSection';
 
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*&populate[wave_title_image]=*&populate[pink_card_image]=*&populate[grey_card_image]=*&populate[pink_listing]=*&populate[grey_listing]=*&populate[pricing_cards][populate][listing]=*&populate[available_image]=*&populate[person_first_image]=*&populate[person_second_image]=*&populate[plus_image]=*&populate[you_image]=*&populate[clutch_review][populate]=*&populate[clutch_title_image]=*&populate[left_column_block]=*&populate[right_column_block]=*`,
       { cache: 'no-store' }
     );
     const json = await res.json();
@@ -74,8 +80,66 @@ export default async function Home() {
             ? page.wave_title_image.url
             : `${strapiUrl}${page.wave_title_image.url}`
           : ""}
-        wave_listing_block={waveListing}
+        wave_listing_block={page?.wave_listing || []}
         strapiUrl={strapiUrl}
+      />
+      <ConversionSection
+        conversion_title={page?.conversion_title || ""}
+        conversion_description={page?.conversion_description || ""}
+        pink_card_title={page?.pink_card_title || ""}
+        pink_card_image={page?.pink_card_image?.url || ""}
+        grey_card_title={page?.grey_card_title || ""}
+        grey_card_image={page?.grey_card_image?.url || ""}
+        pink_listing={page?.pink_listing || []}
+        grey_listing={page?.grey_listing || []}
+        strapiUrl={strapiUrl}
+      />
+      <PricingSection
+        pricing_title={page?.pricing_title || ""}
+        pricing_cards={page?.pricing_cards || []}
+      />
+      <CalculatorSection
+        calculator_title={page?.calculator_title || ""}
+        the_number_heading={page?.the_number_heading || ""}
+        fint_out_heading={page?.fint_out_heading || ""}
+        left_title={page?.left_title || ""}
+        left_desc={page?.left_desc || ""}
+        monthly_heading={page?.monthly_heading || ""}
+        average_heading={page?.average_heading || ""}
+        current_conversion_heading={page?.current_conversion_heading || ""}
+        current_monthly_heading={page?.current_monthly_heading || ""}
+        right_title={page?.right_title || ""}
+        right_description={page?.right_description || ""}
+        new_conversion_heading={page?.new_conversion_heading || ""}
+        extra_revenue_heading={page?.extra_revenue_heading || ""}
+        last_desc={page?.last_desc || ""}
+        calculator_cta={page?.calculator_cta || ""}
+        calculator_cta_url={page?.calculator_cta_url || "#"}
+      />
+      <ReadySection
+        ready_subtitle={page?.ready_subtitle || ""}
+        ready_title={page?.ready_title || ""}
+        available_image={page?.available_image?.url || ""}
+        available_heading={page?.available_heading || ""}
+        person_first_image={page?.person_first_image?.url || ""}
+        person_second_image={page?.person_second_image?.url || ""}
+        plus_image={page?.plus_image?.url || ""}
+        you_image={page?.you_image?.url || ""}
+        quick_heading={page?.quick_heading || ""}
+        pick_heading={page?.pick_heading || ""}
+        ready_cta={page?.ready_cta || ""}
+        ready_cta_url={page?.ready_cta_url || "#"}
+        strapiUrl={strapiUrl}
+      />
+      <ClutchSection
+        clutch_title={page?.clutch_title || ""}
+        clutch_title_image={page?.clutch_title_image?.url || ""}
+        clutch_review={page?.clutch_review || []}
+        strapiUrl={strapiUrl}
+      />
+      <FaqSection
+        left_column_block={page?.left_column_block || []}
+        right_column_block={page?.right_column_block || []}
       />
     </div>
   );
