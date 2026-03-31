@@ -10,8 +10,9 @@ import ReadySection from './components/ready/ReadySection';
 import ClutchSection from './components/clutch/ClutchSection';
 import FaqSection from './components/faq/FaqSection';
 
-// Fallback ensures images always load even if env var is missing
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'https://my-strapi-backend-production-d272.up.railway.app';
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ||
+  'https://my-strapi-backend-production-d272.up.railway.app';
 
 function imgUrl(url?: string): string {
   if (!url) return '';
@@ -21,7 +22,7 @@ function imgUrl(url?: string): string {
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*`,
+      `${STRAPI_URL}/api/pages?populate=*`, // ✅ FIXED
       { cache: 'no-store' }
     );
 
@@ -41,12 +42,35 @@ async function getPageData() {
 export default async function Home() {
   const page = await getPageData();
 
-  const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
-    item.MarqueeImage?.map((img: any) => ({
-      url: imgUrl(img.url),
-      alternativeText: img.alternativeText || '',
-    })) || []
-  ) || [];
+  // ✅ FIXED Marquee Images
+  const marqueeImages =
+  page?.MarqueeImages?.flatMap((item: any) => {
+    const img = item?.image?.data?.attributes;
+
+    return img
+      ? [
+          {
+            url: imgUrl(img.url),
+            alternativeText: img.alternativeText || '',
+          },
+        ]
+      : [];
+  }) || [];
+
+  // ✅ FIXED Brand Logos
+  const brandLogos =
+  page?.brandslogo?.flatMap((item: any) => {
+    const logo = item?.logo?.data?.attributes;
+
+    return logo
+      ? [
+          {
+            url: imgUrl(logo.url),
+            alt: logo.alternativeText || '',
+          },
+        ]
+      : [];
+  }) || [];
 
   return (
     <div
@@ -73,7 +97,7 @@ export default async function Home() {
         who_subtitle={page?.who_subtitle || ""}
         who_title={page?.who_title || ""}
         slides={page?.slides || []}
-        brandslogo={page?.brandslogo || []}
+        brandslogo={brandLogos} // ✅ FIXED
         strapiUrl={STRAPI_URL}
       />
 
@@ -146,7 +170,7 @@ export default async function Home() {
 
       <ClutchSection
         clutch_title={page?.clutch_title || ""}
-        clutch_title_image={imgUrl(page?.clutch_title_image?.url)}
+        clutch_title_image={page?.clutch_title_image || ""} // ✅ FIXED
         clutch_review={page?.clutch_review || []}
         strapiUrl={STRAPI_URL}
       />
