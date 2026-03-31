@@ -10,16 +10,30 @@ import ReadySection from './components/ready/ReadySection';
 import ClutchSection from './components/clutch/ClutchSection';
 import FaqSection from './components/faq/FaqSection';
 
+// Fallback ensures images always load even if env var is missing
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'https://my-strapi-backend-production-d272.up.railway.app';
+
+function imgUrl(url?: string): string {
+  if (!url) return '';
+  return url.startsWith('http') ? url : `${STRAPI_URL}${url}`;
+}
+
 async function getPageData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*&populate[wave_title_image]=*&populate[pink_card_image]=*&populate[grey_card_image]=*&populate[pink_listing]=*&populate[grey_listing]=*&populate[pricing_cards][populate][listing]=*&populate[available_image]=*&populate[person_first_image]=*&populate[person_second_image]=*&populate[plus_image]=*&populate[you_image]=*&populate[clutch_review][populate]=*&populate[clutch_title_image]=*&populate[left_column_block]=*&populate[right_column_block]=*`,
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/pages?populate[HeroListings]=*&populate[MarqueeImages][populate]=*&populate[slides][populate]=*&populate[brandslogo][populate]=*&populate[Review][fields][0]=video_vimeo_link&populate[Review][fields][1]=name&populate[Review][fields][2]=title&populate[wave_listing]=*`,
       { cache: 'no-store' }
     );
+
+    if (!res.ok) {
+      console.error('Strapi fetch failed:', res.status, res.statusText);
+      return null;
+    }
+
     const json = await res.json();
     return json.data?.[0] || null;
   } catch (error) {
-    console.error("Fetch error:", error);
+    console.error('Fetch error:', error);
     return null;
   }
 }
@@ -27,18 +41,12 @@ async function getPageData() {
 export default async function Home() {
   const page = await getPageData();
 
-  const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || '';
-
   const marqueeImages = page?.MarqueeImages?.flatMap((item: any) =>
     item.MarqueeImage?.map((img: any) => ({
-      url: img.url.startsWith('http') ? img.url : `${strapiUrl}${img.url}`,
+      url: imgUrl(img.url),
       alternativeText: img.alternativeText || '',
     })) || []
   ) || [];
-
-  const waveListing = page?.wave_listing
-    ? [{ id: page.wave_listing.id, list_heading: page.wave_listing.list_heading }]
-    : [];
 
   return (
     <div
@@ -58,14 +66,17 @@ export default async function Home() {
         hero_rating_heading={page?.hero_rating_heading || ""}
         hero_listing={page?.HeroListings || []}
       />
+
       <MarqueeSection marqueeImages={marqueeImages} />
+
       <WhoWeAre
         who_subtitle={page?.who_subtitle || ""}
         who_title={page?.who_title || ""}
         slides={page?.slides || []}
         brandslogo={page?.brandslogo || []}
-        strapiUrl={strapiUrl}
+        strapiUrl={STRAPI_URL}
       />
+
       <StoriesSection
         stories_subtitle={page?.stories_subtitle || "REAL STORIES"}
         stories_title={page?.stories_title || "Don't take our word for it."}
@@ -73,31 +84,31 @@ export default async function Home() {
         stories_cta_url={page?.stories_cta_url || "#"}
         reviews={page?.Review || []}
       />
+
       <WaveSection
         wave_title={page?.wave_title || "Wave goodbye to..."}
-        wave_title_image={page?.wave_title_image?.url
-          ? page.wave_title_image.url.startsWith('http')
-            ? page.wave_title_image.url
-            : `${strapiUrl}${page.wave_title_image.url}`
-          : ""}
+        wave_title_image={imgUrl(page?.wave_title_image?.url)}
         wave_listing_block={page?.wave_listing || []}
-        strapiUrl={strapiUrl}
+        strapiUrl={STRAPI_URL}
       />
+
       <ConversionSection
         conversion_title={page?.conversion_title || ""}
         conversion_description={page?.conversion_description || ""}
         pink_card_title={page?.pink_card_title || ""}
-        pink_card_image={page?.pink_card_image?.url || ""}
+        pink_card_image={imgUrl(page?.pink_card_image?.url)}
         grey_card_title={page?.grey_card_title || ""}
-        grey_card_image={page?.grey_card_image?.url || ""}
+        grey_card_image={imgUrl(page?.grey_card_image?.url)}
         pink_listing={page?.pink_listing || []}
         grey_listing={page?.grey_listing || []}
-        strapiUrl={strapiUrl}
+        strapiUrl={STRAPI_URL}
       />
+
       <PricingSection
         pricing_title={page?.pricing_title || ""}
         pricing_cards={page?.pricing_cards || []}
       />
+
       <CalculatorSection
         calculator_title={page?.calculator_title || ""}
         the_number_heading={page?.the_number_heading || ""}
@@ -116,27 +127,30 @@ export default async function Home() {
         calculator_cta={page?.calculator_cta || ""}
         calculator_cta_url={page?.calculator_cta_url || "#"}
       />
+
       <ReadySection
         ready_subtitle={page?.ready_subtitle || ""}
         ready_title={page?.ready_title || ""}
-        available_image={page?.available_image?.url || ""}
+        available_image={imgUrl(page?.available_image?.url)}
         available_heading={page?.available_heading || ""}
-        person_first_image={page?.person_first_image?.url || ""}
-        person_second_image={page?.person_second_image?.url || ""}
-        plus_image={page?.plus_image?.url || ""}
-        you_image={page?.you_image?.url || ""}
+        person_first_image={imgUrl(page?.person_first_image?.url)}
+        person_second_image={imgUrl(page?.person_second_image?.url)}
+        plus_image={imgUrl(page?.plus_image?.url)}
+        you_image={imgUrl(page?.you_image?.url)}
         quick_heading={page?.quick_heading || ""}
         pick_heading={page?.pick_heading || ""}
         ready_cta={page?.ready_cta || ""}
         ready_cta_url={page?.ready_cta_url || "#"}
-        strapiUrl={strapiUrl}
+        strapiUrl={STRAPI_URL}
       />
+
       <ClutchSection
         clutch_title={page?.clutch_title || ""}
-        clutch_title_image={page?.clutch_title_image?.url || ""}
+        clutch_title_image={imgUrl(page?.clutch_title_image?.url)}
         clutch_review={page?.clutch_review || []}
-        strapiUrl={strapiUrl}
+        strapiUrl={STRAPI_URL}
       />
+
       <FaqSection
         left_column_block={page?.left_column_block || []}
         right_column_block={page?.right_column_block || []}
